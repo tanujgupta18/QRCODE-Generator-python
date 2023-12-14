@@ -1,23 +1,21 @@
 import streamlit as st
 import qrcode as qr
 
-def generate_qr_code(url, image_name, qr_version):
-    img = qr.make(url, version=qr_version)
-    img.save(f"{image_name}.png")
+def generate_qr_code(url):
+    img = qr.make(url, version=10)  # You can adjust the version/size as needed
+    img.save("Generated_QR_Code.png")
 
 def main():
     st.title("QR Code Generator")
 
     url = st.text_input("Enter the URL:")
-    image_name = st.text_input("Enter the Image Name:")
-    qr_version = st.slider("Select QR Code Size", min_value=1, max_value=40, value=10)
 
     if st.button("Generate QR Code"):
-        if url and image_name:
-            generate_qr_code(url, image_name, qr_version)
-            st.image(f"{image_name}.png", caption="Generated QR Code", use_column_width=True)
+        if url:
+            generate_qr_code(url)
+            st.image("Generated_QR_Code.png", caption="Generated QR Code", use_column_width=True)
         else:
-            st.warning("Please enter both a valid URL and image name.")
+            st.warning("Please enter a valid URL.")
 
 if __name__ == "__main__":
     main()
